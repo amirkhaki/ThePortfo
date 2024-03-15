@@ -10,4 +10,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         : base(options)
     {
     }
+
+    public DbSet<ThePortfo.Models.Profile> Profile { get; set; } = default!;
 }

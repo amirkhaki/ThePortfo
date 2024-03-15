@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThePortfo.Data;
 
@@ -10,9 +11,11 @@ using ThePortfo.Data;
 namespace ThePortfo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240314134133_ProfileCreate")]
+    partial class ProfileCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
@@ -235,7 +238,6 @@ namespace ThePortfo.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -301,9 +303,7 @@ namespace ThePortfo.Data.Migrations
                 {
                     b.HasOne("ThePortfo.Models.ApplicationUser", "User")
                         .WithOne("Profile")
-                        .HasForeignKey("ThePortfo.Models.Profile", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ThePortfo.Models.Profile", "UserId");
 
                     b.Navigation("User");
                 });
