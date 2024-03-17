@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThePortfo.Data;
 
@@ -10,9 +11,11 @@ using ThePortfo.Data;
 namespace ThePortfo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240315183139_TemplateCreate")]
+    partial class TemplateCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
@@ -257,20 +260,11 @@ namespace ThePortfo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("LayoutHTML")
+                    b.Property<string>("HTML")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Template");
                 });
@@ -343,20 +337,9 @@ namespace ThePortfo.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ThePortfo.Models.Template", b =>
-                {
-                    b.HasOne("ThePortfo.Models.ApplicationUser", "User")
-                        .WithMany("Templates")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ThePortfo.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Profile");
-
-                    b.Navigation("Templates");
                 });
 #pragma warning restore 612, 618
         }

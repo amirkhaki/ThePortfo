@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ThePortfo.Models;
 
@@ -12,4 +12,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<ThePortfo.Models.Profile> Profile { get; set; } = default!;
+
+public DbSet<ThePortfo.Models.Template> Template { get; set; } = default!;
 }

@@ -37,11 +37,11 @@
             </div>
         </form>
 
-        @if (TempData["updated"] != null && (bool) TempData["updated"])
+        @if (TempData["updated"] is bool b && b )
         {
         <hr />
         <div class="alert alert-success" role="alert">Updated Successfully</div>
-        } 
+        }
     </div>
 </div>
 

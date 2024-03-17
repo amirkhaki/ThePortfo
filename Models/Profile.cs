@@ -11,4 +11,6 @@ public class Profile
 	[Phone] public string? PhoneNumber { get; set; }
 	public required string UserId {get; set;}
 	public ApplicationUser? User { get; set; }
+
+	public Template? Template {get; set;}
 }
