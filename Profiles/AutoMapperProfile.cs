@@ -13,5 +13,7 @@ public class AutoMapperProfile : Profile
 		CreateMap<M.Template, TemplateDTO>();
 		CreateMap<PortfolioItemDTO, M.PortfolioItem>();
 		CreateMap<M.PortfolioItem, PortfolioItemDTO>();
+		CreateMap<SkillDTO, M.Skill>();
+		CreateMap<M.Skill, SkillDTO>();
 	}
 }

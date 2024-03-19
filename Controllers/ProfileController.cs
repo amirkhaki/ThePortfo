@@ -47,6 +47,7 @@ public class ProfileController : Controller
         var profile = await _context.Profile
             .Include(p => p.Template)
             .Include(p => p.Items)
+            .Include(p => p.Skills)
             .SingleOrDefaultAsync(p => p.Id == id);
         if (profile == null)
         {
@@ -57,7 +58,9 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        var result = new Mustache.HtmlFormatCompiler().Compile(profile.Template.LayoutHTML).Render(profile);
+        var result = new Mustache.HtmlFormatCompiler()
+            .Compile(profile.Template.LayoutHTML)
+            .Render(profile);
         return Content(result, "text/html");
     }
 
