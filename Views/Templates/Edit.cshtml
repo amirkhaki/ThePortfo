@@ -19,7 +19,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="LayoutHTML" class="control-label"></label>
-                <input asp-for="LayoutHTML" class="form-control" />
+                <div id="editor"style="height: 500px; width: 500px">@Model.LayoutHTML</div>
+                <input type="hidden" id="layoutHTML" name="LayoutHTML" value="@Model.LayoutHTML" />
                 <span asp-validation-for="LayoutHTML" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,4 +36,15 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.min.js" integrity="sha512-GQpIYSKNIPIC763JKTNALj+t18/nfLdzw5gITgFGa31aK/4NmjyPKsfqrjh7CuzpJaG3nqEleeVcWUhHad9Axg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/html");
+
+        // Update hidden input field with editor content
+        editor.getSession().on('change', function(){
+            $('#layoutHTML').val(editor.getSession().getValue());
+        });
+    </script>
 }

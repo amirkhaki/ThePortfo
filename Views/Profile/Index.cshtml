@@ -10,6 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+    <p><a href='@ViewData["ProfileUrl"]' class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">View</a></p>
         <form asp-action="Index">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -31,6 +32,10 @@
                 <label asp-for="PhoneNumber" class="control-label"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TemplateId" class="control-label"></label>
+                <select asp-for="TemplateId" class="form-control" asp-items="@ViewBag.Templates"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
