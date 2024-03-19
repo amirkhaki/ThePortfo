@@ -9,10 +9,11 @@ public class Profile
 	[Required] public string? Title { get; set; }
 	[Required] public string? Location { get; set; }
 	[Phone] public string? PhoneNumber { get; set; }
+	public string AboutMe { get; set; } = string.Empty;
 	public required string UserId { get; set; }
 	public ApplicationUser? User { get; set; }
 
 	public int TemplateId { get; set; }
 	public Template? Template { get; set; }
-	public ICollection<PortfolioItem> Items {get; set;} = new List<PortfolioItem>();
+	public ICollection<PortfolioItem> Items { get; set; } = new List<PortfolioItem>();
 }
