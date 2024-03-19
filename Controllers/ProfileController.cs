@@ -31,7 +31,8 @@ public class ProfileController : Controller
         ViewBag.Templates = new SelectList(await _context.Template.ToListAsync(),
             "Id", "Name", profile?.Template);
         var routeUrl = Url.Action("Detail", new { id = profile?.Id });
-        if (profile == null) {
+        if (profile == null)
+        {
             routeUrl = Url.Action(nameof(Index));
         }
         ViewData["ProfileUrl"] = string.Format("{0}://{1}{2}", Request.Scheme,
@@ -58,9 +59,17 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        var result = new Mustache.HtmlFormatCompiler()
-            .Compile(profile.Template.LayoutHTML)
-            .Render(profile);
+        string result = "";
+        try
+        {
+            result = new Mustache.HtmlFormatCompiler()
+                .Compile(profile.Template.LayoutHTML)
+                .Render(profile);
+        }
+        catch
+        {
+            result = "<h1> invalid template </h1>";
+        }
         return Content(result, "text/html");
     }
 
