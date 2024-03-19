@@ -14,4 +14,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ThePortfo.Models.Profile> Profile { get; set; } = default!;
 
 public DbSet<ThePortfo.Models.Template> Template { get; set; } = default!;
+
+public DbSet<ThePortfo.Models.PortfolioItem> PortfolioItem { get; set; } = default!;
 }

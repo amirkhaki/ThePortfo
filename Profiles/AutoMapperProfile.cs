@@ -11,5 +11,7 @@ public class AutoMapperProfile : Profile
 		CreateMap<ThePortfo.Models.Profile, ProfileDTO>();
 		CreateMap<TemplateDTO, M.Template>();
 		CreateMap<M.Template, TemplateDTO>();
+		CreateMap<PortfolioItemDTO, M.PortfolioItem>();
+		CreateMap<M.PortfolioItem, PortfolioItemDTO>();
 	}
 }

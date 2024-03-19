@@ -14,4 +14,5 @@ public class Profile
 
 	public int TemplateId { get; set; }
 	public Template? Template { get; set; }
+	public ICollection<PortfolioItem> Items {get; set;} = new List<PortfolioItem>();
 }

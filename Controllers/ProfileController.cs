@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using ThePortfo.Data;
 using ThePortfo.Models;
 using ThePortfo.Models.DTOs;
-using Mustache;
 
 namespace ThePortfo.Controllers;
 
@@ -32,8 +31,12 @@ public class ProfileController : Controller
         ViewBag.Templates = new SelectList(await _context.Template.ToListAsync(),
             "Id", "Name", profile?.Template);
         var routeUrl = Url.Action("Detail", new { id = profile?.Id });
+        if (profile == null) {
+            routeUrl = Url.Action(nameof(Index));
+        }
         ViewData["ProfileUrl"] = string.Format("{0}://{1}{2}", Request.Scheme,
             Request.Host, routeUrl);
+
 
         return View(_mapper.Map<ProfileDTO>(profile));
     }
@@ -41,7 +44,10 @@ public class ProfileController : Controller
     [HttpGet("[Controller]/{id}")]
     public async Task<IActionResult> Detail(int id)
     {
-        var profile = await _context.Profile.Include(p => p.Template).SingleOrDefaultAsync(p => p.Id == id);
+        var profile = await _context.Profile
+            .Include(p => p.Template)
+            .Include(p => p.Items)
+            .SingleOrDefaultAsync(p => p.Id == id);
         if (profile == null)
         {
             return NotFound();
@@ -51,14 +57,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        var data = new
-        {
-            Name = profile.Name,
-            Title = profile.Title,
-            Location = profile.Location,
-            PhoneNumber = profile.PhoneNumber
-        };
-        var result = new Mustache.HtmlFormatCompiler().Compile(profile.Template.LayoutHTML).Render(data);
+        var result = new Mustache.HtmlFormatCompiler().Compile(profile.Template.LayoutHTML).Render(profile);
         return Content(result, "text/html");
     }
 
