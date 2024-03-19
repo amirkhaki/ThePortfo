@@ -103,7 +103,7 @@ public class PortfoliosController : Controller
         {
             return NotFound();
         }
-        return View(portfolioItem);
+        return View(_mapper.Map<PortfolioItemDTO>(portfolioItem));
     }
 
     // POST: Portfolios/Edit/5
@@ -111,34 +111,34 @@ public class PortfoliosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ImageUrl")] PortfolioItem portfolioItem)
+    public async Task<IActionResult> Edit(int id, PortfolioItemDTO portfolioItem)
     {
-        if (id != portfolioItem.Id)
+        if (!ModelState.IsValid)
         {
-            return NotFound();
+            return View(portfolioItem);
         }
-
-        if (ModelState.IsValid)
+        var user = await _userManager.GetUserAsync(User);
+        await _context.Entry(user!).Reference(u => u.Profile).LoadAsync();
+        var _portfolioItem = _mapper.Map<PortfolioItem>(portfolioItem);
+        _portfolioItem.Id = id;
+        _portfolioItem.Profile = user!.Profile!;
+        try
         {
-            try
-            {
-                _context.Update(portfolioItem);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PortfolioItemExists(portfolioItem.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+            _context.Update(_portfolioItem);
+            await _context.SaveChangesAsync();
         }
-        return View(portfolioItem);
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!PortfolioItemExists(id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Portfolios/Delete/5
